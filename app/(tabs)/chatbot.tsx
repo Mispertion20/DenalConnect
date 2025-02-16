@@ -6,7 +6,7 @@ import { Fonts } from "@/constants/Fonts";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: "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", dangerouslyAllowBrowser: true });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY, dangerouslyAllowBrowser: true });
 
 const Chatbot = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>([
