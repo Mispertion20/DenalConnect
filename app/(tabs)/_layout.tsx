@@ -1,45 +1,99 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { Tabs } from "expo-router";
+import { View, Pressable } from "react-native";
+import { Colors } from "@/constants/Colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Octicons from "@expo/vector-icons/Octicons";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+function HomeLogo() {
+    return (
+        <View style={{ 
+            flexDirection: "row", 
+            justifyContent: "space-between", 
+            alignItems: "center", 
+            width: "100%",
+            backgroundColor: 'fff',
+        }}>
+            <Pressable onPress={() => alert("Search Pressed")}>
+                <Octicons name="search" size={30} color={Colors.neutral.dark.l1} />
+            </Pressable>
+            <Pressable onPress={() => alert("Inbox Pressed")}>
+                <Octicons name="inbox" size={30} color={Colors.neutral.dark.l1} />
+            </Pressable>
+        </View>
+    );
+}
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <Tabs 
+            screenOptions={{
+                tabBarStyle: {
+                    height: 80,
+                    paddingTop: 12,
+                    justifyContent: "center",             
+                    borderTopWidth: 0,          
+                    shadowOpacity: 0,     
+                    elevation: 0,
+                },
+                tabBarLabelStyle: {
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 10,
+                },
+                tabBarActiveTintColor: Colors.highlight.l2,
+                tabBarInactiveTintColor: Colors.neutral.light.l1,
+                tabBarLabelPosition: "below-icon",
+                headerShadowVisible: false,
+            }}
+        >
+            <Tabs.Screen
+                name="home"
+                options={{
+                    title: "Home",
+                    headerTitle: () => <HomeLogo/>,
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="home" size={24} color={color} />
+                    ),
+                    headerTitleContainerStyle: {
+                        width:'100%',
+                    }
+                }}
+            />
+            <Tabs.Screen
+                name="daily-routine"
+                options={{
+                    title: "Daily Routine",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="clock" size={24} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="chatbot"
+                options={{
+                    title: "Chatbot",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="comment-question" size={24} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="consultation"
+                options={{
+                    title: "Consultation",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="account-heart" size={24} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="settings"
+                options={{
+                    title: "Settings",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="cog" size={24} color={color} />
+                    ),
+                }}
+            />
+        </Tabs>
+    );
 }
